@@ -1,0 +1,131 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-50: #f2fdf7;
+  --color-brand-100: #def58a;
+  --color-brand-200: #c5f06a;
+  --color-brand-500: #26bb85;
+  --color-brand-600: #1fa872;
+  --color-brand-700: #00585b;
+  --color-brand-900: #003b3d;
+  --font-family-sans: var(--font-inter), "Inter", system-ui, sans-serif;
+  --font-family-display: var(--font-bricolage), "Bricolage Grotesque", sans-serif;
+}
+
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  body {
+    @apply bg-gray-50 text-gray-900 antialiased;
+    font-family: var(--font-inter), "Inter", system-ui, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-bricolage), "Bricolage Grotesque", sans-serif;
+  }
+}
+
+/* ── Auth page animations ──────────────────────────────────────────────── */
+@keyframes orb-drift-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%       { transform: translate(50px, -40px) scale(1.12); }
+}
+@keyframes orb-drift-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%       { transform: translate(-40px, 35px) scale(0.92); }
+}
+@keyframes orb-drift-3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%       { transform: translate(30px, 50px) scale(1.08); }
+}
+@keyframes card-float-1 {
+  0%, 100% { transform: translateY(0) rotate(-1.5deg); }
+  50%       { transform: translateY(-10px) rotate(-1.5deg); }
+}
+@keyframes card-float-2 {
+  0%, 100% { transform: translateY(0) rotate(2deg); }
+  50%       { transform: translateY(-14px) rotate(2deg); }
+}
+@keyframes card-float-3 {
+  0%, 100% { transform: translateY(0) rotate(-0.5deg); }
+  50%       { transform: translateY(-8px) rotate(-0.5deg); }
+}
+@keyframes slide-up-fade {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.82); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes pulse-ring {
+  0%   { transform: scale(1); opacity: 0.55; }
+  100% { transform: scale(1.65); opacity: 0; }
+}
+@keyframes lock-open {
+  0%, 60% { transform: rotate(0deg); }
+  80%      { transform: rotate(-25deg); }
+  100%     { transform: rotate(-20deg); }
+}
+@keyframes icon-bounce {
+  0%, 100% { transform: translateY(0); }
+  40%       { transform: translateY(-6px); }
+  60%       { transform: translateY(-3px); }
+}
+@keyframes rocket-rise {
+  0%, 100% { transform: translateY(0) rotate(-35deg); }
+  50%       { transform: translateY(-10px) rotate(-35deg); }
+}
+@keyframes particle {
+  0%   { opacity: 1; transform: translateY(0) scale(1); }
+  100% { opacity: 0; transform: translateY(-28px) scale(0.3); }
+}
+@keyframes envelope-shake {
+  0%, 100% { transform: rotate(0deg); }
+  20%       { transform: rotate(-6deg); }
+  40%       { transform: rotate(6deg); }
+  60%       { transform: rotate(-3deg); }
+  80%       { transform: rotate(3deg); }
+}
+@keyframes fly-out {
+  0%   { opacity: 0; transform: translate(0, 4px) scale(0.6); }
+  40%  { opacity: 1; }
+  100% { opacity: 0; transform: translate(22px, -22px) scale(1); }
+}
+@keyframes bar-grow {
+  from { height: 0; }
+  to   { height: var(--h); }
+}
+@keyframes ticker {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes heart-beat {
+  0%, 100% { transform: scale(1); }
+  30%       { transform: scale(1.35); }
+  50%       { transform: scale(1.15); }
+}
+
+.animate-orb-1      { animation: orb-drift-1 14s ease-in-out infinite; }
+.animate-orb-2      { animation: orb-drift-2 18s ease-in-out infinite; }
+.animate-orb-3      { animation: orb-drift-3 11s ease-in-out infinite; }
+.animate-card-1     { animation: card-float-1 5s ease-in-out infinite; }
+.animate-card-2     { animation: card-float-2 6.5s ease-in-out infinite; }
+.animate-card-3     { animation: card-float-3 4.5s ease-in-out infinite; }
+.animate-slide-up   { animation: slide-up-fade 0.45s ease both; }
+.animate-scale-in   { animation: scale-in 0.4s ease both; }
+.animate-pulse-ring { animation: pulse-ring 1.8s ease-out infinite; }
+.animate-lock-open  { animation: lock-open 1.4s ease-out 0.6s both; }
+.animate-icon-bounce{ animation: icon-bounce 2.4s ease-in-out infinite; }
+.animate-rocket     { animation: rocket-rise 2.8s ease-in-out infinite; }
+.animate-particle   { animation: particle 1.6s ease-out infinite; }
+.animate-envelope   { animation: envelope-shake 2.5s ease-in-out 0.5s infinite; }
+.animate-fly-out    { animation: fly-out 2s ease-out 1s infinite; }
+.animate-spin-slow  { animation: spin-slow 8s linear infinite; }
+.animate-heart      { animation: heart-beat 1.4s ease-in-out infinite; }
