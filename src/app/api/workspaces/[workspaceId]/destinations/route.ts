@@ -172,7 +172,7 @@ export async function POST(
     const db = createAdminClient()
     const encryptedToken = encryptToken(`mock_access_token_${platform}_${uuidv4()}`)
 
-    const { data: conn } = await db.from('smm_oauth_connections').insert({
+    const { data: conn, error: connErr } = await db.from('smm_oauth_connections').insert({
       workspace_id: workspaceId,
       platform,
       authorized_by_user_id: user.id,
@@ -183,13 +183,18 @@ export async function POST(
       last_verified_at: new Date().toISOString(),
     }).select().single()
 
-    const destType = platform === 'instagram' ? 'profile' : platform === 'linkedin' ? 'organization' : 'page'
+    if (connErr || !conn) {
+      console.error('[destinations POST] oauth_connection insert failed:', connErr, { workspaceId, platform, userId: user.id })
+      return NextResponse.json({ data: null, error: { message: 'Failed to save connection', detail: connErr?.message } }, { status: 500 })
+    }
+
+    const destType = platform === 'instagram' ? 'profile' : platform === 'linkedin' || platform === 'linkedin-pages' ? 'organization' : 'page'
     const name = display_name || `My ${platform} Page`
     const handle = username || name.toLowerCase().replace(/\s+/g, '')
 
-    const { data: created } = await db.from('smm_social_destinations').insert({
+    const { data: created, error: destErr } = await db.from('smm_social_destinations').insert({
       workspace_id: workspaceId,
-      oauth_connection_id: conn!.id,
+      oauth_connection_id: conn.id,
       platform,
       external_destination_id: `mock_${platform}_${uuidv4()}`,
       destination_type: destType,
@@ -198,12 +203,17 @@ export async function POST(
       status: 'active',
     }).select()
 
+    if (destErr) {
+      console.error('[destinations POST] destination insert failed:', destErr, { workspaceId, platform })
+      return NextResponse.json({ data: null, error: { message: 'Failed to save destination', detail: destErr.message } }, { status: 500 })
+    }
+
     await db.from('smm_audit_logs').insert({
       workspace_id: workspaceId,
       actor_user_id: user.id,
       action: 'connection:connected',
       entity_type: 'oauth_connection',
-      entity_id: conn!.id,
+      entity_id: conn.id,
       safe_metadata_json: { description: `Connected ${platform}: ${name}` }
     })
 
