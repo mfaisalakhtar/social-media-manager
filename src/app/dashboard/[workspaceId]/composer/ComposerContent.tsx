@@ -61,7 +61,7 @@ function MediaZone({ files, onAdd, onRemove, compact }: {
   const [drag, setDrag] = useState(false)
   const pick = (fl: FileList | null) => {
     Array.from(fl ?? []).forEach(f => {
-      if (f.type.startsWith('image/') || f.type.startsWith('video/'))
+      if (f?.type?.startsWith('image/') || f?.type?.startsWith('video/'))
         onAdd({ file: f, previewUrl: URL.createObjectURL(f) })
     })
   }
@@ -107,7 +107,7 @@ function PreviewCard({ dest, text, media, link }: { dest: Destination; text: str
   const MediaPreview = ({ files, square }: { files: MediaFile[]; square?: boolean }) => {
     if (!files.length) return null
     const first = files[0]
-    if (first.file.type.startsWith('video/')) {
+    if (first.file?.type?.startsWith('video/')) {
       return <video src={first.previewUrl} className="w-full" controls />
     }
     if (files.length === 1) {
