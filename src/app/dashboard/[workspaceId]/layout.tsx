@@ -37,7 +37,7 @@ export default async function WorkspaceLayout({
         <div className="flex h-screen overflow-hidden bg-gray-50">
           <Sidebar workspaceSlug={workspace.slug} workspaceName={workspace.name} />
           <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
-            <Header workspaceName={workspace.name} pageTitle="" />
+            <Header workspaceName={workspace.name} pageTitle="" userName={user.name} userEmail={user.email} />
             <main className="flex-1 overflow-y-auto">{children}</main>
           </div>
           <ComposerModal />
